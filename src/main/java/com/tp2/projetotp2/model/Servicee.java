@@ -3,6 +3,7 @@ package com.tp2.projetotp2.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "TB_SERVICO")
 public class Servicee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
