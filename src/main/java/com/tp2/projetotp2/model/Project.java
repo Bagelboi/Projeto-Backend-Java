@@ -1,16 +1,23 @@
 package com.tp2.projetotp2.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-public class Projeto {
+public class Project {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    private String name;
+    private Double budget;
+    private String category;
+    private String description;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
+    private Set<Servicee> services = new HashSet<>();
     public Long getId() {
         return id;
     }
@@ -51,9 +58,5 @@ public class Projeto {
         this.description = description;
     }
 
-    private String name;
-    private Double budget;
-    private String category;
-    private String description;
 }
 
