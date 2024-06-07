@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "TB_PROJECT")
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

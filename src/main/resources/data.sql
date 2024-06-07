@@ -1,0 +1,2 @@
+INSERT INTO TB_PROJECT (id, name,category,budget,description) values ('1','Site Oficina','Desenvolvimento',8000,'Site para Oficina Mecanica do Indepa');
+INSERT INTO TB_PROJECT (id, name,category,budget,description) values ('2','Loja Virtual','Desenvolvimento',12000,'Loja Virtual para roupas');
