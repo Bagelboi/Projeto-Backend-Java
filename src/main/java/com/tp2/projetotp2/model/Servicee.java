@@ -12,7 +12,8 @@ public class Servicee {
     private double cost;
     private String description;
     @ManyToOne
-    @JoinColumn(name = "service_id")
+    @JoinColumn(name = "project_id")
+    @PersistenceContext
     private Project project;
 
     public Long getId() {

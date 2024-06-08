@@ -13,21 +13,24 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("servico")
+@RequestMapping("service")
 public class ServiceController {
     @Autowired
     private ServiceService serviceService;
     @PostMapping
-    public ResponseEntity<Servicee> createService(@RequestBody ServiceRecordDto serviceDto) {
+    public ResponseEntity<Servicee> creaSteService(@RequestBody ServiceRecordDto serviceDto) {
         return serviceService.save(serviceDto);
     }
     @GetMapping
     public ResponseEntity<List<Servicee>> getAllServices(Long id){
         return serviceService.getAllService();
     }
-
+    @GetMapping("/project/{projectId}")
+    public ResponseEntity<List<Servicee>> getAllServicesByProjectId(@PathVariable Long projectId){
+        return serviceService.getAllServicesByProjectId(projectId);
+    }
     @GetMapping("{id}")
-    public ResponseEntity<Servicee> getServiceById(Long projectId){
+    public ResponseEntity<Servicee> getServiceById(@PathVariable Long projectId){
         return serviceService.findById(projectId);
     }
     @DeleteMapping("{id}")

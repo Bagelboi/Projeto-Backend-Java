@@ -44,7 +44,9 @@ public class ServiceService {
         return ResponseEntity.ok(serviceRepository.findAll());
     }
 
-    public ResponseEntity<List<Servicee>> getAllServicesByProjectId(Long projectId) {
+    public ResponseEntity<List<Servicee>> getAllServicesByProjectId(@PathVariable Long projectId) {
+
+        System.out.println(projectId);
         return ResponseEntity.ok(serviceRepository.findAllByProjectId(projectId));
     }
 

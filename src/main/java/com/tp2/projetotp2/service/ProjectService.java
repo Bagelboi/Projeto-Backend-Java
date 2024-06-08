@@ -18,8 +18,8 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    public Project save(Project project) {
-        return projectRepository.save(project);
+    public ResponseEntity<Project> save(Project project) {
+        return ResponseEntity.ok(projectRepository.save(project));
 
     }
 
