@@ -35,6 +35,7 @@ public class ServiceController {
     }
     @DeleteMapping("{id}")
     public ResponseEntity excluirService (@PathVariable Long id){
+
         return this.serviceService.deleteById(id);
     }
 }
