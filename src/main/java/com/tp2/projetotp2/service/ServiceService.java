@@ -66,7 +66,7 @@ public class ServiceService {
         if (service == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // Return 400 Bad Request
         }else{
-            projectRepository.deleteById(id);
+            serviceRepository.deleteById(id);
             return ResponseEntity.ok(service);
         }
     }

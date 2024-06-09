@@ -24,14 +24,17 @@ public class ProjectService {
     }
 
     public ResponseEntity<List<Project>> findAll() {
+
         return ResponseEntity.ok(projectRepository.findAll());
     }
+
     public ResponseEntity deleteById(@PathVariable Long id) {
         Project project = projectRepository.findById(id).orElse(null);
 
         if (project == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // Return 400 Bad Request
         }else{
+            System.out.print(id);
             projectRepository.deleteById(id);
             return ResponseEntity.ok(project);
         }

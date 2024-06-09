@@ -17,7 +17,7 @@ public class Project {
     private String category;
     private String description;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
     private Set<Servicee> services = new HashSet<>();
     public Long getId() {
         return id;
