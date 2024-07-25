@@ -1,8 +1,10 @@
 package com.tp2.projetotp2.service;
 
 import com.tp2.projetotp2.dtos.ServiceRecordDto;
+import com.tp2.projetotp2.model.Historico;
 import com.tp2.projetotp2.model.Project;
 import com.tp2.projetotp2.model.Servicee;
+import com.tp2.projetotp2.repository.HistoricoRepository;
 import com.tp2.projetotp2.repository.ProjectRepository;
 import com.tp2.projetotp2.repository.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import java.util.List;
 @Service
 public class ServiceService {
 
+    @Autowired
+    private HistoricoService historicoService;
     @Autowired
     private ServiceRepository serviceRepository;
     private ProjectRepository projectRepository;
@@ -38,7 +42,9 @@ public class ServiceService {
         if (service.getProject() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // Return 400 Bad Request
         }
-        return ResponseEntity.ok(serviceRepository.save(service));
+        Servicee saved_service = serviceRepository.save(service);
+        historicoService.newLog(Historico.OPERACAO.CRIAR, "Serviço", "ID: " +   saved_service.getId().toString(), "");
+        return ResponseEntity.ok(saved_service);
     }
     public ResponseEntity<List<Servicee>> getAllService() {
         return ResponseEntity.ok(serviceRepository.findAll());
@@ -66,6 +72,7 @@ public class ServiceService {
         if (service == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // Return 400 Bad Request
         }else{
+            historicoService.newLog(Historico.OPERACAO.APAGAR, "Serviço", "", "ID: " +  id.toString());
             serviceRepository.deleteById(id);
             return ResponseEntity.ok(service);
         }
