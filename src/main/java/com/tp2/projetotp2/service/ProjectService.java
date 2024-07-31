@@ -1,5 +1,6 @@
 package com.tp2.projetotp2.service;
 
+import com.tp2.projetotp2.model.Historico;
 import com.tp2.projetotp2.model.Project;
 import com.tp2.projetotp2.repository.ProjectRepository;
 import org.apache.coyote.Response;
@@ -18,9 +19,13 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    public ResponseEntity<Project> save(Project project) {
-        return ResponseEntity.ok(projectRepository.save(project));
+    @Autowired
+    private HistoricoService historicoService;
 
+    public ResponseEntity<Project> save(Project project) {
+        Project saved_project = projectRepository.save(project);
+        historicoService.newLog(Historico.OPERACAO.CRIAR, "Projeto", "ID: " + saved_project.getId().toString(), "");
+        return ResponseEntity.ok(saved_project);
     }
 
     public ResponseEntity<List<Project>> findAll() {
@@ -36,6 +41,7 @@ public class ProjectService {
         }else{
             System.out.print(id);
             projectRepository.deleteById(id);
+            historicoService.newLog(Historico.OPERACAO.APAGAR, "Projeto", "", "ID: " +   id.toString());
             return ResponseEntity.ok(project);
         }
     }
@@ -50,6 +56,8 @@ public class ProjectService {
     }
     public Project updateProject(Long id, Project newProject) {
         return projectRepository.findById(id).map(project ->{
+            historicoService.newLog(Historico.OPERACAO.ATUALIZAR, "Projeto", String.format("%s|%.2f|%s", newProject.getName(), newProject.getBudget(), newProject.getDescription()),
+                    String.format("%s|%.2f|%s", project.getName(), project.getBudget(), project.getDescription()) );
             project.setName(newProject.getName());
             project.setBudget(newProject.getBudget());
             project.setDescription(newProject.getDescription());
@@ -57,6 +65,7 @@ public class ProjectService {
 
         }).orElseGet(() -> {
             newProject.setId(id);
+            historicoService.newLog(Historico.OPERACAO.CRIAR, "Projeto",  "ID: " +  id.toString(), "");
             return projectRepository.save(newProject);
         });
     }
